@@ -1,4 +1,3 @@
-from typing import Optional
 import dropbox
 import sys
 from fastapi import FastAPI, Request, UploadFile
@@ -43,7 +42,7 @@ async def upload_file(file: UploadFile
             # enough Dropbox space quota to upload this file
             if (err.error.is_path() and
                     err.error.get_path().reason.is_insufficient_space()):
-                sys.exit("ERROR: Cannot back up; insufficient space.")
+                sys.exit("ERROR: Cannot dowload; insufficient space.")
             elif err.user_message_text:
                 print(err.user_message_text)
                 sys.exit()
