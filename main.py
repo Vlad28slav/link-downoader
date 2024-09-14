@@ -5,9 +5,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from dropbox.files import WriteMode
 from dropbox.exceptions import ApiError, AuthError
+import os
+from dotenv import load_dotenv
 
-ACCESS_TOKEN = "sl.B8at-3ELLVuv1PCwzsL2vQikKzKYtqNgGKwoUNAT8FkQmcoOTh8I33P42tzeIaHE1WMJmbJv4H4OJwjQy8T3NxzH_sLdhJOfM3GS5Qyd_eb1ybmx3q5pAtqPkPxqVsicMVYBbxM1rWvA"
+load_dotenv()
+
 LOCALFILE = 'text.txt'
+
+ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 
 app = FastAPI()
 
