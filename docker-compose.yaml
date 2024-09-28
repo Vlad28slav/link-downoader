@@ -1,0 +1,28 @@
+services:
+  web:
+    container_name: web
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - ACCESS_TOKEN = ${ACCESS_TOKEN}
+    depends_on:
+      - redis_database
+
+  redis_database:
+    container_name: redis_database
+    image: redis:alpine
+    ports:
+      - 6379
+
+  celery_worker:
+    container_name: celery_worker
+    build:
+      context: .
+    command: celery -A celery_worker worker --pool=solo --loglevel=info
+    environment:
+      - CELERY_BROKER_URL=redis://redis_database:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_database:6379/0
+    depends_on:
+      - redis_database
+      - web

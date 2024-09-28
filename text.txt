@@ -1,5 +1,18 @@
-another text
-some text 
-bdsbdbdbdsgbdsgbgs
-dbgsbdgbdgsbsgddbgs
-rthrthrthtyh
+ <script>
+         document.addEventListener('DOMContentLoaded', function () {
+             const form = document.getElementById('myForm2');
+ 
+             form.addEventListener('submit', async function(event) {
+                 event.preventDefault();
+                 try {
+                     const data = await response.json(); 
+                     const link = data.link;  
+                 } catch (error) {
+                     console.error('Error opening the link:', error);
+                 }
+             });
+         });
+     </script>
+
+
+     

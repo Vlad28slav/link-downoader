@@ -3,24 +3,36 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      
    </head>
    <body>
       <form method="post" id="myForm" action="/upload_file" enctype="multipart/form-data">
-        <input type="file" name="file" id="file">
+         <input type="file" name="file" id="file">
+         <label for="expiration_time">Your file will be awaliable for:</label>
+         <select id="expiration_time", name="expiration_time">
+            <option label="1 hour">1</option>
+            <option label="2 hour">2</option>
+            <option label="3 hour">3</option>
+            <option label="4 hour">4</option>
+            <option label="5 hour">5</option>
+            <option label="6 hour">6</option>
+            <option label="7 hour">7</option>
+            <option label="8 hour">8</option>
+         </select>
+         <label for="fname">Your password:</label>
+         <input type="password" id="password" name="password">
          <input class="submit" type="submit" value="Submit">
       </form>
+      <form method="post" id="myForm2" action="/download_file" enctype="multipart/form-data">
+         <label for="fname">Write your password:</label>
+         <input type="password" id="password" name="password">
+         <label for="fname">Write your receiver's code:</label>
+         <input type="text" id="hash" name="hash">
+         <input class="submit" type="submit" value="Download">
 
-      <label for="expiration_time">Your file will be awaliable for:</label>
+      </form>
+      <div id="result"></div>
 
-<select id="expiration_time">
-  <option label="1 hour">1</option>
-  <option label="2 hour">2</option>
-  <option label="3 hour">3</option>
-  <option label="4 hour">4</option>
-  <option label="5 hour">5</option>
-  <option label="6 hour">6</option>
-  <option label="7 hour">7</option>
-  <option label="8 hour">8</option>
-</select>
-   </body>
+
+     </body>
 </html>

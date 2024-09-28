@@ -1,8 +1,8 @@
 FROM python:3.11
 
-COPY . /project
+COPY . /project_linker
 
-WORKDIR /project
+WORKDIR /project_linker
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
