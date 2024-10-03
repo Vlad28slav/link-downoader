@@ -1,7 +1,7 @@
-from celery import Celery
-from dropbox.exceptions import ApiError
-import dropbox
+"""Celery worker configuration"""
 import os
+from celery import Celery
+import dropbox
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -17,6 +17,15 @@ celery_app = Celery(
 
 @celery_app.task()
 def delayed_delete(file: str):
+    """This function deletes a file from dropbox storage,
+    but with user's setted delay
+
+    Args:
+        file (str): name of file that will be deleted
+
+    Returns:
+        JSON: confirmation of deleting
+    """
     with dropbox.Dropbox(ACCESS_TOKEN) as dbx:
         dbx.files_delete_v2(f'/Temp/{file}')
         return f"{file} was deleted"
