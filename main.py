@@ -2,9 +2,10 @@
 import sys
 import pathlib
 import os
+from typing import Optional
 import dropbox
 from fastapi import FastAPI, Form, Request, UploadFile
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from dropbox.files import WriteMode
 from dropbox.exceptions import ApiError, AuthError
@@ -32,7 +33,7 @@ def main(request: Request):
 
 
 @app.post("/upload_file")
-async def upload_file(file: UploadFile, password: str =  Form(...), expiration_time: int = Form(...)
+async def upload_file(file: UploadFile, password: Optional[str] = Form(None), expiration_time: int = Form(...)
 ):
     """Args:
         file (UploadFile): file that should be downloaded
@@ -86,21 +87,12 @@ async def upload_file(file: UploadFile, password: str =  Form(...), expiration_t
     return {"you can download your file by your password and this code:" : code}
 
 
-@app.post("/download_file")
-async def download_file(password: str =  Form(...), hash_for_downloading: str = Form(...)):
-    """Args:
-        password (str): user's input in HTML form. Defaults to Form(...).
-        hash_for_downloading (str): user's input in HTML form. Defaults to Form(...).
+@app.get("/download_file/{download_link}")
+async def download_file(request: Request, download_link):
+    result = get_link(download_link)
+    if result == "Your link doesn't exists or expired":
+        return result
+    if result == "pass required":
+        return templates.TemplateResponse("password_input.html", {"request": request})
 
-    Returns:
-        file link or message why it's immposible
-    """
-    print(password)
-    with dropbox.Dropbox(ACCESS_TOKEN) as dbx:
-        try:
-            dbx.users_get_current_account()
-            downloading= get_link(password, hash_for_downloading)
-        except AuthError:
-            sys.exit("ERROR: Invalid access token; try re-generating an "
-                "access token from the app console on the web.")
-    return JSONResponse(content={"link": downloading})
+    return {"here's your return pal": result }
