@@ -11,6 +11,7 @@ from dropbox.files import WriteMode
 from dropbox.exceptions import ApiError, AuthError
 from dotenv import load_dotenv
 from tools import set_to_cache, get_link
+from tools import router as validation_router
 from celery_worker import delayed_delete
 
 load_dotenv(override=True)
@@ -18,7 +19,7 @@ load_dotenv(override=True)
 
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 app = FastAPI()
-
+app.include_router(validation_router)
 templates = Jinja2Templates(directory="templates")
 
 

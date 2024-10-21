@@ -23,4 +23,16 @@
 
       </form>
       <div id="result"></div>
-     
+
+    with open("templates/password_input.html") as inf:
+        txt = inf.read()
+        soup = bs4.BeautifulSoup(txt, features="html.parser")
+
+    new_line = soup.new_tag("input")
+    new_line.attrs['id'] = 'download_link'
+    new_line.attrs['name'] = 'download_link'
+    new_line.string = download_link
+    soup.body.append(new_line)
+
+    with open("templates/password_input.html", "w") as outf:
+        outf.write(str(soup))
