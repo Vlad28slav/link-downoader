@@ -1,38 +1,47 @@
- <script>
-         document.addEventListener('DOMContentLoaded', function () {
-             const form = document.getElementById('myForm2');
- 
-             form.addEventListener('submit', async function(event) {
-                 event.preventDefault();
-                 try {
-                     const data = await response.json(); 
-                     const link = data.link;  
-                 } catch (error) {
-                     console.error('Error opening the link:', error);
-                 }
-             });
-         });
-     </script>
-
- <form method="post" id="myForm2" action="/download_file" enctype="multipart/form-data">
-         <label for="fname">Write your password:</label>
-         <input type="password" id="password" name="password">
-         <label for="fname">Write your receiver's code:</label>
-         <input type="text" id="hash_for_downloading" name="hash_for_downloading">
-         <input class="submit" type="submit" value="Download">
-
-      </form>
-      <div id="result"></div>
-
-    with open("templates/password_input.html") as inf:
-        txt = inf.read()
-        soup = bs4.BeautifulSoup(txt, features="html.parser")
-
-    new_line = soup.new_tag("input")
-    new_line.attrs['id'] = 'download_link'
-    new_line.attrs['name'] = 'download_link'
-    new_line.string = download_link
-    soup.body.append(new_line)
-
-    with open("templates/password_input.html", "w") as outf:
-        outf.write(str(soup))
+amqp==5.2.0
+annotated-types==0.7.0
+anyio==4.4.0
+beautifulsoup4==4.12.3
+billiard==4.2.1
+bs4==0.0.2
+celery==5.4.0
+certifi==2024.7.4
+charset-normalizer==3.3.2
+click==8.1.7
+click-didyoumean==0.3.1
+click-plugins==1.1.1
+click-repl==0.3.0
+dropbox==12.0.2
+fastapi==0.112.1
+h11==0.14.0
+httpcore==1.0.5
+httptools==0.6.1
+httpx==0.27.0
+idna==3.7
+Jinja2==3.1.4
+kombu==5.4.2
+MarkupSafe==2.1.5
+ply==3.11
+prompt_toolkit==3.0.48
+pydantic==2.8.2
+pydantic_core==2.20.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
+python-multipart==0.0.9
+PyYAML==6.0.2
+redis==5.0.8
+requests==2.32.3
+six==1.16.0
+sniffio==1.3.1
+soupsieve==2.6
+starlette==0.38.2
+stone==3.3.1
+typing_extensions==4.12.2
+tzdata==2024.2
+urllib3==2.2.2
+uvicorn==0.30.6
+uvloop==0.20.0
+vine==5.1.0
+watchfiles==0.23.0
+wcwidth==0.2.13
+websockets==13.0
