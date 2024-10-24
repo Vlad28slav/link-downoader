@@ -1,7 +1,7 @@
 """main application module"""
 import sys
-import pathlib
 import os
+import shutil
 from typing import Optional
 import dropbox
 from fastapi import FastAPI, Form, Request, UploadFile
@@ -49,16 +49,17 @@ async def upload_file(
 
         try:
             dbx.users_get_current_account()
-            folder = pathlib.Path(".")
+            file_location = f"/project_linker/{file.filename}"
+            with open(file_location, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
             localfile= file.filename
-            filepath = folder / localfile
             target = "/Temp/"
             targetfile = target + localfile
 
         except AuthError:
             sys.exit("ERROR: Invalid access token; try re-generating an "
                 "access token from the app console on the web.")
-    with filepath.open("rb") as f:
+    with open( file_location, "rb") as f:
         print("Uploading " + localfile)
         try:
             meta = dbx.files_upload(
@@ -80,6 +81,7 @@ async def upload_file(
                 sys.exit()
 
     code = set_to_cache(url_dl, expiration_time, password)
+    os.remove(file_location)
 
     return {"you can download your file by your password(or without) by clicking on this link:" :
              code}
